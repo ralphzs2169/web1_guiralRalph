@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Survey Form</title>
+</head>
+<body>
+    
+    <div class="main-container">
+
+        <h1>Survey Form</h1>
+
+        <form>
+            <section class="section1">
+                <fieldset class="section-1_1">
+                    <h2>Section 1</h2>
+                    <p>1.1 Which of the following services do you use?</p>
+                    
+                    <section class="form-1_1">
+                        <div class="column-1">
+                            <div>
+                                <input type="checkbox" id="service1">
+                                <label for="service1">Service 1</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="service3">
+                                <label for="service3">Service 3</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="other-services">
+                                <label for="other-services">Other</label>
+                                <input type="text">
+                            </div>
+                        </div>
+                      
+                        <div class="column-2">
+                            <div>
+                                <input type="checkbox" id="service2">
+                                <label for="service2">Service 2</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="service4">
+                                <label for="service4">Service 4</label>
+                            </div>
+                        </div>
+                        
+                    </section>
+                </fieldset>
+
+                <fieldset class="section-1_2"> 
+                    <p>1.2 How would you rate our services with our services in term of ...</p>
+                    <table border="1">
+                        <thead>
+                            <tr >
+                                <th></th>
+                                <th>Excellent</th>
+                                <th>Very Good</th>
+                                <th>Good</th>
+                                <th>Fair</th>
+                                <th>Poor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Your Overall Experience</td>
+                                <td><input type="radio" name="overall-experience" value="excellent"></td>
+                                <td><input type="radio" name="overall-experience" value="very-good"></td>
+                                <td><input type="radio" name="overall-experience" value="good"></td>
+                                <td><input type="radio" name="overall-experience" value="fair"></td>
+                                <td><input type="radio" name="overall-experience" value="poor"></td>
+                            </tr>
+
+                            <tr>
+                                <td>The Value of Our Service</td>
+                                <td><input type="radio" name="value-service" value="excellent"></td>
+                                <td><input type="radio" name="value-service" value="very-good"></td>
+                                <td><input type="radio" name="value-service" value="good"></td>
+                                <td><input type="radio" name="value-service" value="fair"></td>
+                                <td><input type="radio" name="value-service" value="poor"></td>
+                            </tr>
+                            <tr>
+                                <td>Promptness of our Service</td>
+                                <td><input type="radio" name="promptness-service" value="excellent"></td>
+                                <td><input type="radio" name="promptness-service" value="very-good"></td>
+                                <td><input type="radio" name="promptness-service" value="good"></td>
+                                <td><input type="radio" name="promptness-service" value="fair"></td>
+                                <td><input type="radio" name="promptness-service" value="poor"></td>
+                            </tr>
+                            <tr>
+                                <td>The Courtesy of our Staff</td>
+                                <td><input type="radio" name="staff-courtesy" value="excellent"></td>
+                                <td><input type="radio" name="staff-courtesy" value="very-good"></td>
+                                <td><input type="radio" name="staff-courtesy" value="good"></td>
+                                <td><input type="radio" name="staff-courtesy" value="fair"></td>
+                                <td><input type="radio" name="staff-courtesy" value="poor"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+                <fieldset>
+                    <p>1.3 Any comments or suggestions</p>
+                    <textarea cols="100" rows="5"></textarea>
+                </fieldset>
+
+            </section>
+
+            <section class="section2">
+                <h2>Section 2</h2>
+                <fieldset>
+                    <p>2.1 How may we reach you? (optional)</p>
+
+                    <div>
+                        <label for="name">Your name:</label>
+                        <input type="text" id="name">
+                    </div>
+                    <div>
+                        <label for="phone">Phone:</label>
+                        <input type="text" id="phone">
+                    </div>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="text" id="email">
+                    </div>
+                </fieldset>
+
+            </section>
+
+            <div class="buttons">
+                <input type="submit" id="submit">
+                <input type="reset" id="reset">
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>
