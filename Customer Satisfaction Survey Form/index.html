@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Satisfaction Survey Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Customer Satisfaction Survey Form</h1>
+        <form>
+            <fieldset class="number1">
+                <p>1) Why did you contact customer service?</p>
+                <textarea class="contact-reason-input" rows="10" cols="100"></textarea>
+            </fieldset>
+
+            <fieldset class="number2">
+                <p>2) What method did you use to contact customer service?</p>
+                <div class="form2">
+                    <div>
+                        <input type="radio" id="telephone" name="customer-service" value="telephone">
+                        <label for="telephone">Telephone</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="mail" name="customer-service" value="mail">
+                        <label for="mail">Mail</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="email" name="customer-service" value="email">
+                        <label for="email">E-mail</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="fax" name="customer-service" value="fax">
+                        <label for="fax">Fax</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="other" name="customer-service" value="other">
+                        <label for="other">Other:</label>
+                    </div>
+                    
+                </div>
+                <textarea class="others-input" id="others-input" value="others-input" cols="75"></textarea>
+            </fieldset>
+
+            <fieldset class="number3">
+                <p>3) How satisfied are you with the time it took customer service to answer your question or resolve your issue</p>
+                
+                <div class="form3">
+                    <div>
+                        <input type="radio" id="very-dissatisfied" name="number3" value="very-dissatisfied">
+                        <label for="very-dissatisfied">Very Dissatisfied</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="dissatisfied" name="number3" value="dissatisfied">
+                        <label for="dissatisfied">Dissatisfied</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="undecided-number3" name="number3" value="undecided-number3">
+                        <label for="undecided-number3">Undecided</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="satisfied" name="number3" value="satisfied">
+                        <label for="satisfied">Satisfied</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="very-satisfied" name="number3" value="very-satisfied">
+                        <label for="very-satisfied">Very-Satisfied</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <h2>Please tell us how much you agree or disagree with the following statemnts.</h2>
+
+        
+            <fieldset class="number4">
+                <p>4) The customer service representative was knowledgeable and easy to understand</p>
+            
+                <div class="form4">
+                    <div>
+                        <input type="radio" id="strongly-disagree-number4" name="number4" value="strongly-disagree-number4">
+                        <label for="strongly-disagree-number4">Strongly Disagree</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="disagree-number4" name="number4" value="disagree-number4">
+                        <label for="disagree-number4">Disagree</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="undecided-number4" name="number4" value="undecided-number4">
+                        <label for="undecided-number4">Undecided</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="agree-number4" name="number4" value="agree-number4">
+                        <label for="agree-number4">Agree</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="strongly-agree-number4" name="number4" value="strongly-agree-number4">
+                        <label for="strongly-agree-number4">Strongly Agree</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="number5">
+                <p>5) The customer service representative was able to handle my problem quickly and to my satisfaction</p>
+                <div class="form5">
+                    <div>
+                        <input type="radio" id="strongly-disagree-number5" name="number5" value="strongly-disagree-number5">
+                        <label for="strongly-disagree-number5">Strongly Disagree</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="disagree-number5" name="number5" value="disagree-number5">
+                        <label for="disagree-number5">Disagree</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="undecided-number5" name="number5" value="undecided-number5">
+                        <label for="undecided-number5">Undecided</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="agree-number5" name="number5" value="agree-number5">
+                        <label for="agree-number5">Agree</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="strongly-agree-number5" name="number5" value="strongly-agree-number5">
+                        <label for="strongly-agree-number5">Strongly Agree</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="buttons">
+                <input type="submit">
+                <input type="reset">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
+}
+.main-container{
+    background-color: #535366;
+    width: 100%;
+    height: fit-content;
+    padding: 3em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+form {
+    background-color: #EAE6E0;
+    padding: 2em;
+    border-radius: 30px;
+    width: 70%;
+}
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 1em;
+}
+p{
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+fieldset {
+    border: none;
+    margin-bottom: 3em;
+}
+h2 {
+    margin-bottom: 2em;
+}
+.contact-reason-input {
+    resize: none;
+    padding: 1em;
+}
+.buttons{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    margin-top: 1em;
+}
+.buttons>input{
+    width: 100px;
+    height: fit-content;
+    padding-block: .7em;
+    margin-bottom: 3em;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.buttons>input:hover{
+    scale: 1.02;
+}
+.form2,
+.form3,
+.form4,
+.form5{
+    display: flex;
+    gap: 3em;
+}
+.others-input {
+    margin-top: 1em;
+    resize: none;
+}
