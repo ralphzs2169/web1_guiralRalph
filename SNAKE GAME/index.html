@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="style.css"></link>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&family=Lilita+One&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Permanent+Marker&family=Poiret+One&display=swap" rel="stylesheet">
+
+
+    <title>Document</title>
+</head>
+<body>
+
+<div class="loader-container">
+    <div class="loader"></div>
+</div>
+
+<div class="main-container">
+    <h1>SNAKE GAME</h1>
+
+    <!-- MAIN MENU -->
+    <section class="main-menu-container">
+        <div class="menu-options-container">
+            <button id="start-btn" class="option-btns">Start Game</button>
+
+            <div id="difficulty-option-label">
+                <img id="prev-difficulty-btn" src="images/prev-btn.svg">
+                <label>Difficulty:<span id="selected-difficulty">Easy</span></label>
+                <img id="nxt-difficulty-btn" src="images/next-btn.svg">
+
+                <ul class="highlight-difficulty">
+                    <li id="highlight-easy" style="background: #30800d;"></li>
+                    <li id="highlight-normal"></li>
+                    <li id="highlight-hard"></li>
+                    <li id="highlight-extreme"></li>
+                </ul>
+            </div>
+
+            <button id="instructions-btn" class="option-btns">How To Play?</button>
+        </div>
+    </section>
+    
+    <!-- GAME CANVAS -->
+    <section class="canvas-container">
+        <div class="canvas-header">
+            <label id="food-icon-label"><img id='food-icon' src="images/apple.png" alt="Score Icon"> <span id="score">0</span></label>
+            <label id="highscore-icon-label"><img id="highscore-icon" src="images/highscore.png" alt="Higchscore Icon"><span id="highscore">0</span></label>
+            <label id="difficulty-label"><span id="difficulty">Difficulty: </span></label>
+        </div>
+        <canvas id="gameCanvas" ></canvas>
+    </section>
+
+    <!-- HOW TO PLAY/ INSTRUCTIONS  -->
+    <section class="instructions-container">
+        <div class="instructions-header">
+            HOW TO PLAY?
+        </div>
+        <p class="snake-introduction">
+            The Snake Game is a classic arcade-style game where the player controls a snake that moves around the screen, 
+            eating food and growing longer while avoiding collisions with itself and the walls. Here’s how to play:
+        </p>
+
+        <ol class="how-to-play-instructions">
+            <li>Start the game – The snake starts as a small line moving in a specific direction.</li>
+            <li>Move the snake – Use arrow keys (⬆️⬇️⬅️➡️) keys to control its movement.</li>
+            <li>Eat food – When the snake eats a food item, it grows longer.</li>
+            <li>Avoid crashing – The game ends if:</li>
+            <ul class="collision-rules">
+                <li>The snake collides with the walls.</li>
+                <li>The snake collides with its own body.</li>
+                <li>The snake collides with the obstacles (Extreme Mode).</li>
+            </ul>
+        </ol>
+
+        <button class="back-to-lobby">Back To Menu</button>
+    </section>
+
+    <!-- POPUP GAMOVER  -->
+    <div class="popup-background"></div>
+
+    <section class="popup-gameover">
+        <h2 class="gameover-header">NEW HIGHSCORE</h2>
+        
+        <div id="new-highscore-label">You've set a new Record for<br> <span id="current-difficulty"></span> Difficulty!</div>
+        <div class="final-score-container">
+            <label class="final-score-label">YOUR SCORE:</label>
+            <span id="final-score">5</span>
+        </div>
+        
+        <label id="score-to-beat"></label>
+
+        <div class="gameover-options-container">
+            <button id="try-again-btn">Try Again</button>
+            <button class="back-to-lobby">Back To Lobby</button>
+        </div>
+    </section>
+
+</div>
+
+<script type="module" src="javascript/snake.js"></script>
+<script type="module" src="javascript/gameManager.js"></script>
+</body>
+
+</html>
