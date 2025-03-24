@@ -155,8 +155,8 @@ h1 {
     left: 0;
     width: 60%;
     gap: 8px;
-    margin-left: auto; /* Push to the next line */
-    flex-basis: 100%;  /* Force it to take a full row */
+    margin-left: auto; 
+    flex-basis: 100%; 
     margin-inline: 20%;
 }
 .highlight-difficulty > * {
