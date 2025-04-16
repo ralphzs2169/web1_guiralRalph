@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nurses On-The-Go</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="m-0 p-0">
+  <div class="flex flex-col lg:flex-row h-screen w-full">
+
+    <!-- Left Panel -->
+    <div class="relative w-full lg:w-1/2 flex items-center justify-center text-center bg-white px-6 py-12">
+      <!-- Background Image on small screens -->
+      <div class="absolute inset-0 lg:hidden">
+        <img src="your-image.png" alt="Nurse" class="w-full h-full object-cover opacity-30" />
+        <div class="absolute inset-0 bg-white bg-opacity-80"></div>
+      </div>
+
+      <div class="relative z-10 max-w-xl">
+        <!-- Logo -->
+        <div class="flex items-center justify-center mb-4">
+          <img src="your-logo.png" alt="Logo" class="w-8 h-8 mr-2" />
+          <span class="text-sky-700 font-bold tracking-wide">NURSES- ON-THE- GO</span>
+        </div>
+
+        <!-- Tagline -->
+        <p class="text-gray-700 text-sm mb-2">Nurses on the Go – Endorse Anytime, Anywhere!</p>
+
+        <!-- Heading -->
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-sky-900 leading-tight mb-6">
+          Fast-Track Your<br />
+          Nursing Career –<br />
+          Get Endorsed<br />
+          Online with Ease!
+        </h1>
+
+        <!-- Button -->
+        <button class="bg-sky-200 text-sky-900 font-semibold px-6 py-3 rounded hover:bg-sky-300 transition">
+          GET STARTED
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Panel (Hidden on small screens, visible on large screens only) -->
+    <div class="hidden lg:block w-1/2">
+      <img src="your-image.png" alt="Nurse" class="w-full h-full object-cover" />
+    </div>
+  </div>
+</body>
+
+</html>
