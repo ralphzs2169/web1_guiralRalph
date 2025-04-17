@@ -4,8 +4,9 @@ require_once __DIR__ . '/../models/Department.php';
 class DepartmentController {
     private $departmentModel;
 
-    public function __construct() {
-        $this->departmentModel = new Department();
+    // Accept $pdo and pass it to the model
+    public function __construct($pdo) {
+        $this->departmentModel = new Department($pdo);
     }
 
     // Get all departments
