@@ -27,12 +27,16 @@ class Router {
 
                 require_once __DIR__ . '/../controllers/' . $controllerName . '.php';
 
-                // ✅ Inject $pdo when creating controller
+                
                 $controller = new $controllerName($pdo);
 
                 if (method_exists($controller, $action)) {
-                    $data = $method === 'POST' ? json_decode(file_get_contents('php://input'), true) : [];
-                    $controller->$action($data, ...$matches);
+                    $data = json_decode(file_get_contents('php://input'), true);
+                    if ($method === 'POST') {
+                        $controller->$action($data, ...$matches);
+                    } else {
+                        $controller->$action(...$matches);
+                    }
                     return;
                 } else {
                     http_response_code(404);
@@ -76,6 +80,7 @@ class Router {
                 '/referrals/{patient_id}' => 'ReferralController@getByPatient',
                 '/treatments/{patient_id}' => 'TreatmentController@getByPatient',
                 '/ivf/{patient_id}' => 'IvfInfusionController@getByPatient',
+                '/getNotes/{user_id}/{patient_id}' => 'EndorsementController@getNotes',
             ],
         ];
     }
