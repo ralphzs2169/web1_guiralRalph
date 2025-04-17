@@ -4,11 +4,10 @@ require_once __DIR__ . '/../models/User.php';
 class RegisterController {
     private $userModel;
 
-    public function __construct() {
-        $this->userModel = new User();
+    public function __construct($pdo) {
+        $this->userModel = new User($pdo);
     }
 
-    // Handles user registration
     public function register($data) {
         if (
             empty($data['lastname']) ||
@@ -50,7 +49,6 @@ class RegisterController {
         }
     }
 
-    // Update passcode after verifying the current password
     public function updatePasscode($data) {
         if (empty($data['user_id']) || empty($data['current_password']) || empty($data['new_passcode'])) {
             http_response_code(400);
@@ -58,10 +56,8 @@ class RegisterController {
             return;
         }
 
-        // Call the model's method to update the passcode
         $result = $this->userModel->updatePasscode($data['user_id'], $data['current_password'], $data['new_passcode']);
 
-        // Return the result (success or error)
         if (isset($result['success']) && $result['success']) {
             echo json_encode(['success' => true, 'message' => 'Passcode updated successfully.']);
         } else {
