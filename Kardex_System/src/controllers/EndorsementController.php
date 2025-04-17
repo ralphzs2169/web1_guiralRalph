@@ -4,11 +4,11 @@ require_once __DIR__ . '/../models/Endorsement.php';
 class EndorsementController {
     private $endorsementModel;
 
-    public function __construct() {
-        $this->endorsementModel = new Endorsement();
+    public function __construct($pdo) {
+        $this->endorsementModel = new Endorsement($pdo);
     }
 
-    // called when a user submits a new note
+    //addNote
     public function create($data) {
         if (empty($data['user_id']) || empty($data['patient_id']) || empty($data['note'])) {
             http_response_code(400);
@@ -26,8 +26,8 @@ class EndorsementController {
         }
     }
 
-    // retreives all notes written by a specific user for a specific patient
-    public function getNotes($user_id, $patient_id) {
+    
+    public function getNotes($data, $user_id, $patient_id) {
         $notes = $this->endorsementModel->getNotesByUserAndPatient($user_id, $patient_id);
         echo json_encode($notes);
     }
