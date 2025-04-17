@@ -3,6 +3,11 @@
 class Router {
     // Dispatch the request based on URI and HTTP method
     public function dispatch($uri, $method) {
+        echo "URI: $uri, Method: $method\n"; 
+
+        // Load the database connection
+        require_once __DIR__ . '/../config/database.php';
+
         $routes = $this->getRoutes();
 
         if (!isset($routes[$method])) {
@@ -12,23 +17,22 @@ class Router {
         }
 
         foreach ($routes[$method] as $route => $handler) {
-            //regex pattern to capture values
             $pattern = preg_replace('#\{[^/]+\}#', '([^/]+)', $route);
             $pattern = "#^" . $pattern . "$#";
 
             if (preg_match($pattern, $uri, $matches)) {
-                array_shift($matches); 
+                array_shift($matches);
 
                 list($controllerName, $action) = explode('@', $handler);
 
-                
                 require_once __DIR__ . '/../controllers/' . $controllerName . '.php';
 
-                $controller = new $controllerName();
+                // ✅ Inject $pdo when creating controller
+                $controller = new $controllerName($pdo);
 
                 if (method_exists($controller, $action)) {
                     $data = $method === 'POST' ? json_decode(file_get_contents('php://input'), true) : [];
-                    $controller->$action(...$matches);
+                    $controller->$action($data, ...$matches);
                     return;
                 } else {
                     http_response_code(404);
