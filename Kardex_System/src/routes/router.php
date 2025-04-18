@@ -1,12 +1,13 @@
 <?php
 
-class Router {
+class Router
+{
     // Dispatch the request based on URI and HTTP method
-    public function dispatch($uri, $method) {
-        echo "URI: $uri, Method: $method\n"; 
+    public function dispatch($uri, $method)
+    {
 
         // Load the database connection
-        require_once __DIR__ . '/../config/database.php';
+        require_once __DIR__ . '/../../config/database.php';
 
         $routes = $this->getRoutes();
 
@@ -27,7 +28,7 @@ class Router {
 
                 require_once __DIR__ . '/../controllers/' . $controllerName . '.php';
 
-                
+
                 $controller = new $controllerName($pdo);
 
                 if (method_exists($controller, $action)) {
@@ -51,13 +52,18 @@ class Router {
     }
 
     // All routes are declared here
-    private function getRoutes() {
+    private function getRoutes()
+    {
         return [
             'POST' => [
-                '/register' => 'RegisterController@register',
+                '/register/step1' => 'RegisterController@validateInitial',
+                '/register/step2' => 'RegisterController@register',
                 '/updatePasscode' => 'RegisterController@updatePasscode',
+                '/deleteUser' => 'RegisterController@deleteUserById',
                 '/login' => 'LoginController@login',
                 '/verify' => 'PasscodeController@verify',
+                '/addBed' => 'BedController@addBed',
+                '/deleteBed' => 'BedController@deleteBedById',
                 '/assignBed' => 'BedController@assignBedToPatient',
                 '/removeBedAssignment' => 'BedController@removeBedAssignment',
                 '/addPatient' => 'PatientController@create',
@@ -72,9 +78,11 @@ class Router {
             'GET' => [
                 '/departments' => 'DepartmentController@getDepartments',
                 '/departments/{id}' => 'DepartmentController@getDepartment',
+                '/users' => 'RegisterController@getAllUsers',
                 '/allBeds' => 'BedController@getAllBeds',
                 '/bed/{bed_number}' => 'BedController@getBedByNumber',
                 '/patients/{id}' => 'PatientController@getPatientById',
+                '/loadPatientFolders' => 'PatientController@getAllPatients',
                 '/latestViewers/{patient_id}' => 'EndorsementViewController@getLatestViewers',
                 '/attachments/{patient_id}' => 'AttachmentController@getByPatient',
                 '/referrals/{patient_id}' => 'ReferralController@getByPatient',

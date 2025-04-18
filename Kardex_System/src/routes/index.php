@@ -12,7 +12,7 @@ require_once __DIR__ . '/router.php';
 
 // Get the current URI and HTTP method
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = str_replace('/nurse/backend/routes/index.php', '', $uri); 
+$uri = str_replace('/kardex_system/src/routes/index.php', '', $uri);
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Initialize the Router and handle the request

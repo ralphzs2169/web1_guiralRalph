@@ -1,61 +1,90 @@
 <?php
-//This will handle all database interactions related to patients.
-require_once __DIR__ . '/../config/database.php';
+// This will handle all database interactions related to patients.
 
-class Patient {
+class Patient
+{
+    private $pdo;
 
-    // fetch all the patients
-    public function getAllPatients() {
-        global $pdo;
-        $stmt = $pdo->query("SELECT * FROM patients ORDER BY created_at DESC");
-        return $stmt->fetchAll();
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
     }
 
-    // fetch patient by id
-    public function getPatientById($patient_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM patients WHERE patient_id = ?");
+    // Fetch all patients
+    public function getAllPatients()
+    {
+        $stmt = $this->pdo->query("SELECT * FROM patients ORDER BY created_at DESC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Fetch patient by ID
+    public function getPatientById($patient_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM patients WHERE patient_id = ?");
         $stmt->execute([$patient_id]);
         return $stmt->fetch();
     }
 
-    // fetch patient by bed id (but this assumes that a bed can only have one patient at a time)
-    public function getPatientByBedId($bed_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM patients WHERE bed_id = ?");
-        $stmt->execute([$bed_id]);
-        return $stmt->fetch(); // returns false if no patient is assigned to that bed
-    }    
-
-    // create a new patient
-    public function createPatient($lastname, $firstname, $midinit, $age, $gender, $diagnosis, $bed_id, $contactNo = null) {
-        global $pdo;
-        $stmt = $pdo->prepare("
-            INSERT INTO patients (lastname, firstname, midinit, age, gender, diagnosis, contactNo, bed_id) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        return $stmt->execute([$lastname, $firstname, $midinit, $age, $gender, $diagnosis, $bed_id, $contactNo]);
+    public function getPatientByUuid($patient_uuid)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM patients WHERE patient_uuid = ?");
+        $stmt->execute([$patient_uuid]);
+        return $stmt->fetch();
     }
 
-    // delete a patient
-    public function deletePatient($patient_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("DELETE FROM patients WHERE patient_id = ?");
+    // Fetch patient by bed ID
+    public function getPatientByBedId($bed_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM patients WHERE bed_id = ?");
+        $stmt->execute([$bed_id]);
+        return $stmt->fetch();
+    }
+
+    // Create a new patient
+    public function createPatient($lastname, $firstname, $midinit, $gender, $diagnosis, $status, $nationality, $religion, $physician, $date_of_birth, $patient_uuid)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO patients (lastname, firstname, midinit, gender, diagnosis, status, nationality, religion, physician, date_of_birth, patient_uuid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        return $stmt->execute([
+            $lastname,
+            $firstname,
+            $midinit,
+            $gender,
+            $diagnosis,
+            $status,
+            $nationality,
+            $religion,
+            $physician,
+            $date_of_birth,
+            $patient_uuid
+        ]);
+    }
+
+    // Delete a patient
+    public function deletePatient($patient_id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM patients WHERE patient_id = ?");
         return $stmt->execute([$patient_id]);
     }
 
-    // update a patient's information details
-    public function updatePatient($patient_id, $lastname, $firstname, $midinit, $age, $gender, $diagnosis, $bed_id, $contactNo = null) {
-        global $pdo;
-    
-        $stmt = $pdo->prepare("
-            UPDATE patients 
-            SET lastname = ?, firstname = ?, midinit = ?, age = ?, gender = ?, diagnosis = ?,  bed_id = ?, contactNo = ?
-            WHERE patient_id = ?
-        ");
-    
+    // Update a patient
+    public function updatePatient($patient_id, $lastname, $firstname, $midinit, $bed_id, $gender, $diagnosis, $status, $nationality, $religion, $physician, $date_of_birth)
+    {
+        $stmt = $this->pdo->prepare("UPDATE patients SET lastname = ?, firstname = ?, midinit = ?, bed_id = ?, gender = ?, diagnosis = ?, status = ?, nationality = ?, religion = ?, physician = ?, date_of_birth = ? WHERE patient_id = ?");
+
         return $stmt->execute([
-            $lastname, $firstname, $midinit, $age, $gender, $diagnosis,  $bed_id, $contactNo, $patient_id
+            $lastname,
+            $firstname,
+            $midinit,
+            $bed_id,
+            $gender,
+            $diagnosis,
+            $status,
+            $nationality,
+            $religion,
+            $physician,
+            $date_of_birth,
+            $patient_id
         ]);
-    }    
+    }
 }

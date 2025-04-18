@@ -1,15 +1,18 @@
 <?php
 require_once __DIR__ . '/../models/Endorsement.php';
 
-class EndorsementController {
+class EndorsementController
+{
     private $endorsementModel;
 
-    public function __construct($pdo) {
+    public function __construct($pdo)
+    {
         $this->endorsementModel = new Endorsement($pdo);
     }
 
     //addNote
-    public function create($data) {
+    public function create($data)
+    {
         if (empty($data['user_id']) || empty($data['patient_id']) || empty($data['note'])) {
             http_response_code(400);
             echo json_encode(['error' => 'All fields are required.']);
@@ -26,8 +29,9 @@ class EndorsementController {
         }
     }
 
-    
-    public function getNotes($data, $user_id, $patient_id) {
+
+    public function getNotes($data, $user_id, $patient_id)
+    {
         $notes = $this->endorsementModel->getNotesByUserAndPatient($user_id, $patient_id);
         echo json_encode($notes);
     }

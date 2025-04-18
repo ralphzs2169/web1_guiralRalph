@@ -1,15 +1,18 @@
 <?php
 require_once __DIR__ . '/../models/Referral.php';
 
-class ReferralController {
+class ReferralController
+{
     private $referralModel;
 
-    public function __construct($pdo) {
+    public function __construct($pdo)
+    {
         $this->referralModel = new Referral($pdo);
     }
 
     // Handles adding a new referral (expects patient_id, department_id, reason)
-    public function add($data) {
+    public function add($data)
+    {
         if (
             empty($data['patient_id']) ||
             empty($data['department_id']) ||
@@ -35,7 +38,8 @@ class ReferralController {
     }
 
     // Gets all referrals for a patient
-    public function getByPatient($patient_id) {
+    public function getByPatient($patient_id)
+    {
         if (empty($patient_id)) {
             http_response_code(400);
             echo json_encode(['error' => 'Missing patient ID.']);

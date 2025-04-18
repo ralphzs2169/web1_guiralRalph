@@ -1,15 +1,18 @@
 <?php
 require_once __DIR__ . '/../models/Treatment.php';
 
-class TreatmentController {
+class TreatmentController
+{
     private $treatmentModel;
 
-    public function __construct($pdo) {
-        $this->treatmentModel = new Treatment($pdo); 
+    public function __construct($pdo)
+    {
+        $this->treatmentModel = new Treatment($pdo);
     }
 
     // Adds a new treatment record (expects patient_id and treatment_text from frontend)
-    public function add($data) {
+    public function add($data)
+    {
         // Validates required fields
         if (empty($data['patient_id']) || empty($data['treatment_text'])) {
             http_response_code(400); // Bad Request
@@ -28,7 +31,8 @@ class TreatmentController {
     }
 
     // Fetches all treatments by patient ID
-    public function getByPatient($patient_id) {
+    public function getByPatient($patient_id)
+    {
         if (empty($patient_id)) {
             http_response_code(400); // Bad Request
             echo json_encode(['error' => 'Missing patient ID.']);
@@ -36,7 +40,7 @@ class TreatmentController {
         }
 
         $treatments = $this->treatmentModel->getTreatmentsByPatient($patient_id);
-        
+
         if ($treatments) {
             echo json_encode($treatments);
         } else {

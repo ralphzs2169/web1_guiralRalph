@@ -1,16 +1,19 @@
 <?php
 require_once __DIR__ . '/../models/Attachment.php';
 
-class AttachmentController {
+class AttachmentController
+{
     private $attachmentModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->attachmentModel = new Attachment();
     }
 
     // Adds a new attachment for a patient
     // Assumes file upload is already handled and path + name are passed to this controller
-    public function add($data) {
+    public function add($data)
+    {
         if (
             empty($data['patient_id']) ||
             empty($data['file_name']) ||
@@ -31,7 +34,8 @@ class AttachmentController {
     }
 
     // Returns all attachments of a patient
-    public function getByPatient($patient_id) {
+    public function getByPatient($patient_id)
+    {
         $attachments = $this->attachmentModel->getAttachmentsByPatient($patient_id);
         echo json_encode($attachments);
     }

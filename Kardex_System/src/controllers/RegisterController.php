@@ -1,35 +1,89 @@
 <?php
 require_once __DIR__ . '/../models/User.php';
 
-class RegisterController {
+class RegisterController
+{
     private $userModel;
 
-    public function __construct($pdo) {
+    public function __construct($pdo)
+    {
         $this->userModel = new User($pdo);
     }
 
-    public function register($data) {
-        if (
-            empty($data['lastname']) ||
-            empty($data['firstname']) ||
-            empty($data['midinit']) ||
-            empty($data['email']) ||
-            empty($data['password']) ||
-            empty($data['passcode']) ||
-            empty($data['department_id'])
-        ) {
-            http_response_code(400);
-            echo json_encode(['error' => 'All fields are required.']);
-            return;
+    private function respondJson($data, $statusCode = 200)
+    {
+        http_response_code($statusCode);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    //Validate user input without the passcode
+    public function isUserInputValid($data)
+    {
+        $errors = [];
+
+        if (empty($data['lastname'])) $errors['emptyLastname'] = 'Last name cannot be empty.';
+        if (empty($data['firstname'])) $errors['emptyFirstname'] = 'First name cannot be empty.';
+        if (empty($data['email'])) $errors['emptyEmail'] = 'Email cannot be empty.';
+        if (empty($data['password'])) $errors['emptyPassword'] = 'Password cannot be empty.';
+        if (empty($data['department_id'])) $errors['emptyDepartment'] = 'A Department must be selected.';
+
+        if (!empty($data['email'])) {
+            $existing = $this->userModel->getUserByEmail($data['email']);
+            if ($existing) {
+                $errors['emailExists'] = 'Email already exists.';
+            }
         }
 
-        $existing = $this->userModel->getUserByEmail($data['email']);
-        if ($existing) {
-            http_response_code(409);
-            echo json_encode(['error' => 'Email already exists.']);
-            return;
+        return $errors;
+    }
+
+    //Validate user input together with the passcode
+    public function isFinalInformationValid($data)
+    {
+        $errors = [];
+
+        if (empty($data['lastname'])) $errors['emptyLastname'] = 'Last name cannot be empty.';
+        if (empty($data['firstname'])) $errors['emptyFirstname'] = 'First name cannot be empty.';
+        if (empty($data['email'])) $errors['emptyEmail'] = 'Email cannot be empty.';
+        if (empty($data['password'])) $errors['emptyPassword'] = 'Password cannot be empty.';
+        if (empty($data['passcode'])) $errors['emptyPasscode'] = 'Passcode is required';
+        if (empty($data['department_id'])) $errors['emptyDepartment'] = 'A Department must be selected.';
+
+        return $errors;
+    }
+
+    // Step 1: validate form (without passcode)
+    public function validateInitial($data)
+    {
+        $errors = $this->isUserInputValid($data);
+
+        if (!empty($errors)) {
+            return $this->respondJson([
+                'success' => false,
+                'errors' => $errors
+            ], 400);
         }
 
+        return $this->respondJson([
+            'success' => true,
+            'message' => 'Initial validation passed.'
+        ]);
+    }
+
+    // Step 2: final registration (with passcode)
+    public function register($data)
+    {
+        $errors = $this->isFinalInformationValid($data);
+
+        if (!empty($errors)) {
+            return $this->respondJson([
+                'success' => false,
+                'errors' => $errors
+            ], 400);
+        }
+
+        //if success, insert to the database
         $success = $this->userModel->register(
             $data['lastname'],
             $data['firstname'],
@@ -42,27 +96,93 @@ class RegisterController {
         );
 
         if ($success) {
-            echo json_encode(['success' => true, 'message' => 'User registered successfully.']);
-        } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'Something went wrong.']);
+            return $this->respondJson([
+                'success' => true,
+                'message' => 'User registered successfully.'
+            ]);
+        }
+
+        return $this->respondJson([
+            'success' => false,
+            'message' => 'Something went wrong during registration.'
+        ], 500);
+    }
+
+    // Optional: for updating passcodes later
+    public function updatePasscode($data)
+    {
+        if (empty($data['user_id']) || empty($data['current_passcode']) || empty($data['new_passcode'])) {
+            return $this->respondJson([
+                'success' => false,
+                'error' => 'User ID, current password, and new passcode are required.'
+            ], 400);
+        }
+
+        $result = $this->userModel->updatePasscode(
+            $data['user_id'],
+            $data['current_passcode'],
+            $data['new_passcode']
+        );
+
+        if (isset($result['success']) && $result['success']) {
+            return $this->respondJson([
+                'success' => true,
+                'message' => 'Passcode updated successfully.'
+            ]);
+        }
+
+        return $this->respondJson([
+            'success' => false,
+            'error' => $result['error'] ?? 'Unknown error'
+        ], 400);
+    }
+
+
+    public function getAllUsers()
+    {
+        try {
+            $users = $this->userModel->getAllUsers();
+
+            return $this->respondJson([
+                'success' => true,
+                'data' => $users
+            ]);
+        } catch (Exception $e) {
+            return $this->respondJson([
+                'success' => false,
+                'error' => 'Failed to retrieve users: ' . $e->getMessage()
+            ], 500);
         }
     }
 
-    public function updatePasscode($data) {
-        if (empty($data['user_id']) || empty($data['current_password']) || empty($data['new_passcode'])) {
-            http_response_code(400);
-            echo json_encode(['error' => 'User ID, current password, and new passcode are required.']);
-            return;
-        }
+    public function deleteUserById($data)
+    {
+        try {
+            if (empty($data['user_id'])) {
+                return $this->respondJson([
+                    'success' => false,
+                    'error' => 'User ID is required.'
+                ], 400);
+            }
 
-        $result = $this->userModel->updatePasscode($data['user_id'], $data['current_password'], $data['new_passcode']);
+            $result = $this->userModel->deleteUserById($data['user_id']);
 
-        if (isset($result['success']) && $result['success']) {
-            echo json_encode(['success' => true, 'message' => 'Passcode updated successfully.']);
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => $result['error']]);
+            if (isset($result['success']) && $result['success']) {
+                return $this->respondJson([
+                    'success' => true,
+                    'message' => 'User deleted successfully.'
+                ]);
+            }
+
+            return $this->respondJson([
+                'success' => false,
+                'error' => $result['error'] ?? 'Failed to delete user.'
+            ], 500);
+        } catch (Exception $e) {
+            return $this->respondJson([
+                'success' => false,
+                'error' => $result['error'] ?? 'Unknown error'
+            ], 500);
         }
     }
 }

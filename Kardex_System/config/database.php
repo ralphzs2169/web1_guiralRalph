@@ -1,22 +1,15 @@
 <?php
-// config/database.php
-
-$host = 'localhost'; 
-$db = 'nurse_db';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
+$host = 'localhost';
+$dbname = 'nurse_db';
+$username = 'root';
+$password = 'ralphzs2169';
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    // Create a new PDO object
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+
+    // Set error mode to throw exceptions (helpful for debugging)
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+    echo "❌ Connection failed: " . $e->getMessage();
 }
